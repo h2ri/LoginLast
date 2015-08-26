@@ -73,8 +73,11 @@ class SignUp(generics.CreateAPIView):
 			#calling for accesstoken
 			token =  getAuthToken(creds,password)
 			q = User.objects.get(username = creds["username"])
-			print AccessToken.objects.get(user=q.id)
-            		return Response(token,status=status.HTTP_201_CREATED,
+			p = AccessToken.objects.get(user=q.id)
+			print p.token
+			print p.expires
+			print RefreshToken.objects.get(user=q.id).token
+			return Response(token ,status=status.HTTP_201_CREATED,
                             headers=headers)
 
         	return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
